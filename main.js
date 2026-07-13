@@ -122,7 +122,7 @@ const style_obce = function (feature) {
 //geomorfologia
 const geomorfologicke_celky = new VectorLayer({
   source: new VectorSource({
-    url: '/geomorfologicke_celky-atlas.geojson',
+    url: import.meta.env.BASE_URL + '/geomorfologicke_celky-atlas.geojson',
     format: new GeoJSON(),
   }),
   style: style_g1,
@@ -135,7 +135,7 @@ const geomorfologicke_celky = new VectorLayer({
 
 const geomorfologicke_jednotky = new VectorLayer({
   source: new VectorSource({
-    url: '/geomorfologicke_jednotky.geojson',
+    url: import.meta.env.BASE_URL + '/geomorfologicke_jednotky.geojson',
     format: new GeoJSON(),
   }),
   style: style_g11,
@@ -148,7 +148,7 @@ const geomorfologicke_jednotky = new VectorLayer({
 
 const geologicke_oblasti = new VectorLayer({
   source: new VectorSource({
-    url: '/geomorfologicke_oblasti.geojson',
+    url: import.meta.env.BASE_URL + '/geomorfologicke_oblasti.geojson',
     format: new GeoJSON(),
   }),
   style: style_g2,
@@ -160,7 +160,7 @@ const geologicke_oblasti = new VectorLayer({
 //obce
 const obce = new VectorLayer({
   source: new VectorSource({
-    url: '/obce.geojson',
+    url: import.meta.env.BASE_URL + '/obce.geojson',
     format: new GeoJSON(),
   }),
   style: style_obce,
