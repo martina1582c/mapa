@@ -50,7 +50,7 @@ const style_g11 = function (feature) {
   return new Style({
     stroke: new Stroke({
       color: '#6a4607',
-      width: 0.5,
+      width: 0.7,
     }),
     fill: new Fill({
       color: 'rgba(0,0,0,0)',
@@ -152,7 +152,7 @@ const geologicke_oblasti = new VectorLayer({
     format: new GeoJSON(),
   }),
   style: style_g2,
-  title: 'Geologické oblasti',
+  title: 'Geologické pásma',
   visible: true,
   opacity: 0.5,
 });
@@ -175,7 +175,7 @@ const obce_sur = { //objekt s mestami a ich sferickymi suradnicami
 //------------------------------------------------------------------------VIEW----------------------------------------------------------------
 const view = new View({
   center: obce_sur.topolcany,
-  zoom: 10,
+  zoom: 9,
   minZoom: 7,
 });
 
