@@ -157,20 +157,6 @@ const geologicke_oblasti = new VectorLayer({
   opacity: 0.5,
 });
 
-//obce
-const obce = new VectorLayer({
-  source: new VectorSource({
-    url: import.meta.env.BASE_URL + '/obce.geojson',
-    format: new GeoJSON(),
-  }),
-  style: style_obce,
-  title: 'Obce',
-  visible: true,
-  opacity: 1,
-  minResolution: 0,
-  maxResolution: 100,
-});
-
 //osm
 const osm = new TileLayer({
   source: new OSM(),
@@ -202,7 +188,6 @@ const map = new Map({
     geologicke_oblasti,
     geomorfologicke_celky,
     geomorfologicke_jednotky,
-    //obce,
   ],
   view: view,
 });
@@ -396,3 +381,18 @@ popupCloser.onclick = function () {
   popupCloser.blur();
   return false;
 };
+
+//----------------------------------------------------------------------------INFO-------------------------------------------------------------
+const sourceButton = document.getElementById('source-button');
+const sourcePanel = document.getElementById('source-panel');
+const closeSource = document.getElementById('close-source');
+
+
+sourceButton.addEventListener('click', () => {
+  sourcePanel.classList.remove('hidden');
+});
+
+
+closeSource.addEventListener('click', () => {
+  sourcePanel.classList.add('hidden');
+});
