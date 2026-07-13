@@ -1,0 +1,57 @@
+@import "node_modules/ol/ol.css";
+
+html, body {
+  margin: 0;
+  height: 100%;
+}
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+#panel {
+  position: absolute;
+  top: 40px;
+  right: 30px;
+  width: 25vw;
+  background-color: #fffb;
+  border: 1px solid #eee;
+  min-height: 100px;
+}
+
+.ol-popup {
+  position: absolute;
+  background-color: white;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid black;
+  min-width: 250px;
+  bottom: 12px;
+  left: -50px;
+}
+
+.ol-popup:after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 48px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: white transparent transparent transparent;
+}
+
+.ol-popup-closer {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  text-decoration: none;
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.ol-popup-closer::after {
+  content: "✖";
+}
