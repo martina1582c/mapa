@@ -294,6 +294,47 @@ export function initLayerPanel(map) {
   map.getLayers().on('change:length', () => renderLayerPanel(map));
 }
 
+//-------------------------------------------------------------------PANELY---------------------------------------------------------
+const layersButton = document.getElementById("layers-button");
+const legendButton = document.getElementById("legend-button");
+
+const layersPanel = document.getElementById("layers-panel");
+const legendPanel = document.getElementById("legend-panel");
+
+layersButton.addEventListener("click", () => {
+
+    legendPanel.classList.add("hidden");
+    sourcePanel.classList.add("hidden");
+
+    legendButton.classList.remove("active");
+    sourceButton.classList.remove("active");
+
+    layersPanel.classList.toggle("hidden");
+    layersButton.classList.toggle("active");
+
+    if (layersPanel.classList.contains("hidden")) {
+        layersButton.classList.remove("active");
+    }
+
+});
+
+legendButton.addEventListener("click", () => {
+
+    layersPanel.classList.add("hidden");
+    sourcePanel.classList.add("hidden");
+
+    layersButton.classList.remove("active");
+    sourceButton.classList.remove("active");
+
+    legendPanel.classList.toggle("hidden");
+    legendButton.classList.toggle("active");
+
+    if (legendPanel.classList.contains("hidden")) {
+        legendButton.classList.remove("active");
+    }
+
+});
+
 //-----------------------------------------------------------------INTERAKCIE---------------------------------------------------------
 const nazvyAtributov = {
   objectid: "ID",
@@ -383,16 +424,21 @@ popupCloser.onclick = function () {
 };
 
 //----------------------------------------------------------------------------INFO-------------------------------------------------------------
-const sourceButton = document.getElementById('source-button');
-const sourcePanel = document.getElementById('source-panel');
-const closeSource = document.getElementById('close-source');
+const sourceButton = document.getElementById("source-button");
+const sourcePanel = document.getElementById("source-panel");
 
 
-sourceButton.addEventListener('click', () => {
-  sourcePanel.classList.remove('hidden');
-});
+sourceButton.addEventListener("click", () => {
 
+    // Zatvor ostatné panely
+    layersPanel.classList.add("hidden");
+    legendPanel.classList.add("hidden");
 
-closeSource.addEventListener('click', () => {
-  sourcePanel.classList.add('hidden');
+    layersButton.classList.remove("active");
+    legendButton.classList.remove("active");
+
+    // Prepni panel O mape
+    sourcePanel.classList.toggle("hidden");
+    sourceButton.classList.toggle("active");
+
 });
