@@ -90,34 +90,6 @@ const style_g2 = function (feature) {
   });
 };
 
-//styl pre obce
-const style_obce = function (feature) {
-  return new Style({
-    image: new CircleStyle({
-      radius: 5,
-      fill: new Fill({
-        color: '#ffffff',
-      }),
-      stroke: new Stroke({
-        color: '#000000',
-        width: 1,
-      }),
-    }),
-    text: new Text({
-      text: feature.get('OBEC'),
-      font: '14px Calibri,sans-serif',
-      offsetY: -15,
-      fill: new Fill({
-        color: '#000000',
-      }),
-      stroke: new Stroke({
-        color: '#ffffff',
-        width: 3,
-      }),
-    }),
-  });
-};
-
 //-----------------------------------------------------------DEFINOVANIE VRSTIEV-------------------------------------------------------
 //geomorfologia
 const geomorfologicke_celky = new VectorLayer({

@@ -70,7 +70,7 @@ body {
     right: 10px;
 
     width: auto;
-    max-height: 75vh;
+    max-height: 85vh;
     overflow-y: auto;
 
     padding: 18px;
@@ -198,8 +198,8 @@ body {
 /* Aktívne (otvorené) tlačidlo */
 .map-button.active,
 #source-button.active {
-    background: #dbeeff;
-    border-color: #5aa9e6;
+    background: #7dc3ff;
+    border-color: #7dc3ff;
 }
 
 /* ---------------------------------- MOBILNÉ ZOBRAZENIE ---------------------------------- */
