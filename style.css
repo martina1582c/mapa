@@ -273,4 +273,60 @@ body {
         height: 15px;
         margin-right: 6px;
     }
+
+    #compass{
+        width: 80px;
+        height: 80px;
+    }
+}
+
+/* ------------------------------- KOMPAS ------------------------------- */
+
+#compass {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 110px;
+    height: 110px;
+    z-index: 1000;
+}
+
+#compass-rose {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+    border: 2px solid #999;
+    transition: transform 0.25s ease;
+}
+
+.dir,
+#north-button {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid #777;
+    background: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.north { top: 4px; left: 50%; transform: translateX(-50%); }
+.south { bottom: 4px; left: 50%; transform: translateX(-50%); }
+.east  { right: 4px; top: 50%; transform: translateY(-50%); }
+.west  { left: 4px; top: 50%; transform: translateY(-50%); }
+
+#north-button{
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:#dbeeff;
+}
+
+/* ------------------------------- TLAČIDLO MOJA POLOHA ------------------------------- */
+
+#location-button{
+    left: 230px;
 }

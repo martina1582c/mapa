@@ -17,6 +17,10 @@ import Text from 'ol/style/Text.js';
 
 import Overlay from 'ol/Overlay.js';
 
+import Geolocation from "ol/Geolocation.js";
+import Feature from "ol/Feature.js";
+import Point from "ol/geom/Point.js";
+
 //-----------------------------------------------------------DEFINOVANIE STYLOV-------------------------------------------------------
 //styl pre geomorfologicke celky
 const style_g1 = function (feature) {
@@ -135,6 +139,32 @@ const osm = new TileLayer({
   title: 'Open Street Map',
 });
 
+const positionFeature = new Feature();
+
+positionFeature.setStyle(new Style({
+    image: new CircleStyle({
+        radius: 7,
+        fill: new Fill({
+            color: "#1976D2"
+        }),
+        stroke: new Stroke({
+            color: "white",
+            width: 3
+        })
+    })
+}));
+
+const accuracyFeature = new Feature();
+
+const locationLayer = new VectorLayer({
+    source: new VectorSource({
+        features: [accuracyFeature, positionFeature]
+    }),
+    title: "Moja poloha"
+});
+
+//map.addLayer(locationLayer);
+
 //suradnice
 const coords = fromLonLat([17.1077, 48.1486], 'EPSG:3857') //coords je pole s prevedenymi suradnicami z kartezskych na sfericke
 const obce_sur = { //objekt s mestami a ich sferickymi suradnicami
@@ -151,6 +181,15 @@ const view = new View({
   minZoom: 7,
 });
 
+// -------------------------- GEOLOKÁCIA --------------------------
+
+const geolocation = new Geolocation({
+    trackingOptions: {
+        enableHighAccuracy: true
+    },
+    projection: view.getProjection()
+});
+
 
 //------------------------------------------------------------------------MAPA----------------------------------------------------------------
 const map = new Map({
@@ -160,6 +199,7 @@ const map = new Map({
     geologicke_oblasti,
     geomorfologicke_celky,
     geomorfologicke_jednotky,
+    locationLayer,
   ],
   view: view,
 });
@@ -307,6 +347,41 @@ legendButton.addEventListener("click", () => {
 
 });
 
+// --------------------------------------------------------- KOMPAS ---------------------------------------------------------
+
+const compassRose = document.getElementById("compass-rose");
+const northButton = document.getElementById("north-button");
+
+// Aktualizuje otočenie kompasu podľa mapy.
+view.on("change:rotation", () => {
+    const rot = view.getRotation();
+    compassRose.style.transform = `rotate(${-rot}rad)`;
+});
+
+// Klik na stred = sever.
+northButton.addEventListener("click", () => {
+    view.animate({
+        rotation: 0,
+        duration: 300
+    });
+});
+
+// Klik na S, V, J, Z.
+document.querySelectorAll(".dir").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        const degrees = Number(button.dataset.rotation);
+
+        view.animate({
+            rotation: degrees * Math.PI / 180,
+            duration: 300
+        });
+
+    });
+
+});
+
 //-----------------------------------------------------------------INTERAKCIE---------------------------------------------------------
 const nazvyAtributov = {
   objectid: "ID",
@@ -399,7 +474,6 @@ popupCloser.onclick = function () {
 const sourceButton = document.getElementById("source-button");
 const sourcePanel = document.getElementById("source-panel");
 
-
 sourceButton.addEventListener("click", () => {
 
     // Zatvor ostatné panely
@@ -412,5 +486,44 @@ sourceButton.addEventListener("click", () => {
     // Prepni panel O mape
     sourcePanel.classList.toggle("hidden");
     sourceButton.classList.toggle("active");
+
+});
+
+//------------------------------------------------------------------------------POLOHA-----------------------------------------------------------
+geolocation.on("change:position", () => {
+
+    const coordinates = geolocation.getPosition();
+
+    positionFeature.setGeometry(
+        coordinates ? new Point(coordinates) : null
+    );
+
+});
+
+geolocation.on("change:accuracyGeometry", () => {
+
+    accuracyFeature.setGeometry(
+        geolocation.getAccuracyGeometry()
+    );
+
+});
+
+const locationButton = document.getElementById("location-button");
+
+locationButton.addEventListener("click", () => {
+
+    geolocation.setTracking(true);
+
+    geolocation.once("change:position", () => {
+
+        const coords = geolocation.getPosition();
+
+        view.animate({
+            center: coords,
+            zoom: 13,
+            duration: 800
+        });
+
+    });
 
 });
