@@ -1,5 +1,21 @@
 @import "node_modules/ol/ol.css";
 
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;     /* zabráni scrollovaniu */
+}
+
+#map {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;     /* skryje presah pri rotácii */
+}
+
 /* ------------------------------------------------ MAPA ------------------------------------------------ */
 
 html,
@@ -318,15 +334,30 @@ body {
 .east  { right: 4px; top: 50%; transform: translateY(-50%); }
 .west  { left: 4px; top: 50%; transform: translateY(-50%); }
 
-#north-button{
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    background:#dbeeff;
+#location-compass {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 32px;
+    height: 32px;
+
+    border-radius: 50%;
+    border: 1px solid #777;
+
+    background: #dbeeff;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-/* ------------------------------- TLAČIDLO MOJA POLOHA ------------------------------- */
+/* ------------------------- HOVER EFEKT TLAČIDIEL ------------------------- */
 
-#location-button{
-    left: 230px;
+.map-button:hover,
+#source-button:hover,
+.dir:hover,
+#location-compass:hover {
+    box-shadow: 0 0 8px rgba(0,0,0,0.45);
+    border-color: #000;
 }

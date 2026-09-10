@@ -53,7 +53,7 @@ const style_g11 = function (feature) {
 
   return new Style({
     stroke: new Stroke({
-      color: '#6a4607',
+      color: '#717171',
       width: 0.7,
     }),
     fill: new Fill({
@@ -172,12 +172,13 @@ const obce_sur = { //objekt s mestami a ich sferickymi suradnicami
   lucenec: fromLonLat([19.6694, 48.3307]),
   dvorany: fromLonLat([18.1175, 48.4894]),
   lovinobana: fromLonLat([19.5912, 48.4376]),
+  hrb: fromLonLat([19.4557, 48.7282]),
 }
 
 //------------------------------------------------------------------------VIEW----------------------------------------------------------------
 const view = new View({
-  center: obce_sur.topolcany,
-  zoom: 9,
+  center: obce_sur.hrb,
+  zoom: 8,
   minZoom: 7,
 });
 
@@ -350,20 +351,30 @@ legendButton.addEventListener("click", () => {
 // --------------------------------------------------------- KOMPAS ---------------------------------------------------------
 
 const compassRose = document.getElementById("compass-rose");
-const northButton = document.getElementById("north-button");
+const locationCompass = document.getElementById("location-compass");
 
 // Aktualizuje otočenie kompasu podľa mapy.
 view.on("change:rotation", () => {
     const rot = view.getRotation();
-    compassRose.style.transform = `rotate(${-rot}rad)`;
+    compassRose.style.transform = `rotate(${rot}rad)`;
 });
 
-// Klik na stred = sever.
-northButton.addEventListener("click", () => {
-    view.animate({
-        rotation: 0,
-        duration: 300
+locationCompass.addEventListener("click", () => {
+
+    geolocation.setTracking(true);
+
+    geolocation.once("change:position", () => {
+
+        const coords = geolocation.getPosition();
+
+        view.animate({
+            center: coords,
+            zoom: 13,
+            duration: 800
+        });
+
     });
+
 });
 
 // Klik na S, V, J, Z.
@@ -374,7 +385,7 @@ document.querySelectorAll(".dir").forEach(button => {
         const degrees = Number(button.dataset.rotation);
 
         view.animate({
-            rotation: degrees * Math.PI / 180,
+            rotation: -degrees * Math.PI / 180,
             duration: 300
         });
 
@@ -527,3 +538,17 @@ locationButton.addEventListener("click", () => {
     });
 
 });
+
+//------------------------------------------------------VÝPIS KDE SA OSOBA NACHÁDZA--------------------------------------------------------
+// geom celok, kde sa nachádza bod
+const feature = geomorfologicke_celky
+    .getSource()
+    .getFeaturesAtCoordinate(coords)[0];
+
+const celok = feature?.get("gc");
+
+// smer pohybu
+const heading = Math.atan2(
+    currentX - previousX,
+    currentY - previousY
+);
